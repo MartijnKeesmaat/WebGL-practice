@@ -23,32 +23,39 @@
   <script src="three.js"></script>
 
   <script>
-    // Init scene and camera
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-    // Init renderer
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+    camera.position.set(0, 0, 100);
+    camera.lookAt(0, 0, 0);
+
+    const scene = new THREE.Scene();
+
     // Set up properties
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ffff });
-    const cube = new THREE.Mesh(geometry, material);
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff });
+    const geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(-10, 0, 0));
+    geometry.vertices.push(new THREE.Vector3(0, 10, 0));
+    geometry.vertices.push(new THREE.Vector3(10, 0, 0));
+    geometry.vertices.push(new THREE.Vector3(-20, 0, 0));
+    geometry.vertices.push(new THREE.Vector3(20, 0, 0));
+    const line = new THREE.Line(geometry, material);
 
     // Add cube to the scene
-    scene.add(cube);
+    scene.add(line);
+    renderer.render(scene, camera);
 
     // Zoom out camera in order to view the cube from a distance, not full screen
-    camera.position.z = 2;
+    // camera.position.z = 2;
 
     // Create a loop that causes the renderer to draw the scene every time the screen is refreshed 
     // This will be run every frame(normally 60 times per second)
     (function animate() {
       requestAnimationFrame(animate);
-      cube.rotation.x += 0.005;
-      cube.rotation.y += 0.005;
+      // line.rotation.x += 0.01
+      line.rotation.y += 0.01
       // camera.position.z -= 0.001;
       renderer.render(scene, camera);
     })();

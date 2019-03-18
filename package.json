@@ -1,0 +1,19 @@
+{
+  "name": "webgl-practice",
+  "version": "1.0.0",
+  "description": "The goal of this project is to get an overview of how to work with WebGL, understand what topics are involved, get inspired by others and create a simple project. In the wiki i'll be documententing my process.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartijnKeesmaat/WebGL-practice.git"
+  },
+  "author": "Martijn <mpkeesmaat@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MartijnKeesmaat/WebGL-practice/issues"
+  },
+  "homepage": "https://github.com/MartijnKeesmaat/WebGL-practice#readme"
+}
