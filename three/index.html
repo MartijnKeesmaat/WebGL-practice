@@ -5,58 +5,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Three.js docs</title>
-  <style>
-    body {
-      margin: 0;
-    }
-
-    canvas {
-      width: 100%;
-      height: 100%
-    }
-  </style>
+  <title>Three.js</title>
 </head>
 
+<style>
+  body {
+    font-family: sans-serif;
+    padding-top: 50px;
+  }
+
+  a {
+    color: hotpink;
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 30px;
+    transition: .3s all ease;
+  }
+
+  a:hover {
+    opacity: .5;
+  }
+</style>
+
 <body>
-
-  <script src="three.js"></script>
-
-  <script>
-    // Init scene and camera
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-    // Init renderer
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    // Set up properties
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ffff });
-    const cube = new THREE.Mesh(geometry, material);
-
-    // Add cube to the scene
-    scene.add(cube);
-
-    // Zoom out camera in order to view the cube from a distance, not full screen
-    camera.position.z = 2;
-
-    // Create a loop that causes the renderer to draw the scene every time the screen is refreshed 
-    // This will be run every frame(normally 60 times per second)
-    (function animate() {
-      requestAnimationFrame(animate);
-      cube.rotation.x += 0.005;
-      cube.rotation.y += 0.005;
-      camera.position.z -= 0.001;
-      renderer.render(scene, camera);
-    })();
-
-
-
-
-  </script>
+  <h2>
+    <a href="box.html">Box</a>
+  </h2>
+  <h2>
+    <a href="line.html">Line shape</a>
+  </h2>
 </body>
 
 </html>
