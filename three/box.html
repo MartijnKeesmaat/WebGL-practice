@@ -20,6 +20,7 @@
 
 <body>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5.1/dat.gui.min.js"></script>
   <script src="three.js"></script>
 
   <script>
@@ -28,33 +29,60 @@
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     // Init renderer
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Set up properties
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ffff });
-    const cube = new THREE.Mesh(geometry, material);
+    // Setup lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
 
-    // Add cube to the scene
+    const pointLight = new THREE.DirectionalLight(0xffffff, 1);
+    pointLight.position.set(50, 50, 50);
+    scene.add(pointLight);
+
+    // Add cube
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshLambertMaterial({ color: 0x00ffff });
+    const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
+
 
     // Zoom out camera in order to view the cube from a distance, not full screen
     camera.position.z = 2;
 
     // Create a loop that causes the renderer to draw the scene every time the screen is refreshed 
     // This will be run every frame(normally 60 times per second)
-    (function animate() {
-      requestAnimationFrame(animate);
+    renderer.setAnimationLoop(() => {
+      update();
+      render();
+    });
+
+    function update() {
       cube.rotation.x += 0.005;
       cube.rotation.y += 0.005;
-      camera.position.z -= 0.001;
+    }
+
+    function render() {
       renderer.render(scene, camera);
-    })();
+    }
 
+    var gui = new dat.GUI();
+    var cameraGui = gui.addFolder("camera position");
+    cameraGui.add(camera.position, 'x');
+    cameraGui.add(camera.position, 'y');
+    cameraGui.add(camera.position, 'z');
+    cameraGui.open();
 
+    var cameraGui = gui.addFolder("camera projection");
+    cameraGui.add(camera, "fov");
+    cameraGui.open();
 
+    var cubeGui = gui.addFolder("cube position");
+    cubeGui.add(cube.position, 'x');
+    cubeGui.add(cube.position, 'y');
+    cubeGui.add(cube.position, 'z');
+    cubeGui.open();
 
   </script>
 </body>
