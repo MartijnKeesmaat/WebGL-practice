@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Three.js docs</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%
+    }
+  </style>
+</head>
+
+<body>
+
+  <script src="three.js"></script>
+  <script src="vendor/orbit-controls.js"></script>
+
+  <script>
+    // Init scene and camera
+    let controls;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+    // Init renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Setup lights
+    const ambientLight = new THREE.HemisphereLight(
+      0xddeeff, // bright sky color
+      0x202020, // dim ground color
+      3, // intensity
+    );
+    scene.add(ambientLight);
+
+    const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+    mainLight.position.set(10, 10, 10);
+
+    scene.add(ambientLight, mainLight);
+
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load('textures/uv_test_bw.png');
+    texture.encoding = THREE.sRGBEncoding;
+    texture.anisotropy = 16;
+    const material = new THREE.MeshStandardMaterial({
+      map: texture
+    })
+
+    createControls();
+
+    // Add cube
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    // const material = new THREE.MeshLambertMaterial({ color: 0x00ffff });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+
+    // Zoom out camera in order to view the cube from a distance, not full screen
+    camera.position.set(-1, 1, 3);
+
+    // Create a loop that causes the renderer to draw the scene every time the screen is refreshed 
+    // This will be run every frame(normally 60 times per second)
+    renderer.setAnimationLoop(() => {
+      update();
+      render();
+    });
+
+    function update() {
+    }
+
+    function createControls() {
+      controls = new THREE.OrbitControls(camera);
+    }
+
+    function render() {
+      renderer.render(scene, camera);
+      renderer.physicallyCorrectLights = true;
+
+    }
+
+
+  </script>
+</body>
+
+</html>
