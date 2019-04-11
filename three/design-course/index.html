@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <canvas></canvas> -->
+
+    <script src="js/vendor/three.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+    <script>
+        let renderer;
+        let camera;
+        let scene;
+
+        scene = new THREE.Scene();
+
+        setCamera();
+        addMesh();
+        setLights();
+        setRenderer();
+
+
+        // Update on resize 
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectMatrix();
+        })
+
+
+        function setCamera() {
+            camera = new THREE.PerspectiveCamera(
+                75, // fov
+                window.innerWidth / window.innerHeight, //aspect
+                0.1, // clip close
+                1000  // // clip far
+            );
+            camera.position.z = 5;
+        }
+
+        function setLights() {
+            const light = new THREE.PointLight(0xFFFFFF, 1, 500)
+            light.position.set(10, 0, 25);
+            scene.add(light);
+        }
+
+        function addMesh() {
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshLambertMaterial({ color: 0x00FFFF });
+            const box = new THREE.Mesh(geometry, material);
+            box.position.x = -2;
+            scene.add(box);
+        }
+
+        function setRenderer() {
+            // Setup renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setClearColor('#e5e5e5');
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            render();
+        }
+
+        function render() {
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+
+
+    </script>
+</body>
+
+<style>
+    body {
+        margin: 0;
+    }
+</style>
+
+</html>
