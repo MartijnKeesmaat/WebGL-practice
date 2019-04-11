@@ -17,6 +17,7 @@
         let renderer;
         let camera;
         let scene;
+        let box;
 
         scene = new THREE.Scene();
 
@@ -53,8 +54,7 @@
         function addMesh() {
             const geometry = new THREE.BoxGeometry(1, 1, 1);
             const material = new THREE.MeshLambertMaterial({ color: 0x00FFFF });
-            const box = new THREE.Mesh(geometry, material);
-            box.position.x = -2;
+            box = new THREE.Mesh(geometry, material);
             scene.add(box);
         }
 
@@ -69,6 +69,8 @@
 
         function render() {
             requestAnimationFrame(render);
+            box.rotation.x -= 0.01;
+            box.rotation.y -= 0.01;
             renderer.render(scene, camera);
         }
 
