@@ -24,6 +24,7 @@
         setCamera();
         addMesh();
         setLights();
+        setAnimation()
         setRenderer();
 
 
@@ -69,11 +70,16 @@
 
         function render() {
             requestAnimationFrame(render);
-            box.rotation.x -= 0.01;
-            box.rotation.y -= 0.01;
             renderer.render(scene, camera);
         }
 
+        function setAnimation() {
+            this.tl = new TimelineMax().delay(.3);
+            this.tl.to(box.scale, 1, { x: 2, ease: Expo.easeOut })
+            this.tl.to(box.scale, .5, { x: .5, ease: Expo.easeOut })
+            this.tl.to(box.position, .5, { x: 2, ease: Expo.easeOut })
+            this.tl.to(box.rotation, .5, { y: Math.PI * .5, ease: Expo.easeOut }, '=-1.5')
+        }
 
     </script>
 </body>
